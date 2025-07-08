@@ -192,3 +192,12 @@ function updateClientList() {
         // ...rest of your display code...
     });
 }
+function getPackageName(packageType) {
+    const packages = {
+        'starter': 'Starter - $30',
+        'monthly': 'Monthly - $55/month',
+        'extended': 'Extended Growth - $42/month',
+        'yearlong': 'Year-Long - $35/month'
+    };
+    return packages[packageType] || packageType;
+}
