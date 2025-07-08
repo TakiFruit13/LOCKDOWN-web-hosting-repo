@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOCKDOWN - Fitness Coaching for Students</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">LOCKDOWN</div>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#packages">Packages</a></li>
+                    <li><a href="#contact">Get Started</a></li>
+                    <li><a href="#" onclick="toggleAdmin()">Admin</a></li>
+                </ul>
+                <div class="hamburger" onclick="toggleMobileMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div id="main-content">
+        <section id="home" class="hero">
+            <div class="container">
+                <h1>LOCKDOWN Your Fitness Goals</h1>
+                <p>Get fit without the gym! Custom workout plans and nutrition coaching designed specifically for busy middle and high school students.</p>
+                <div class="quote-section">
+                    <blockquote class="motivational-quote">
+                        "You are in danger of living a life so comfortable and soft, that you will die without ever realizing your true potential."
+                        <cite>- David Goggins</cite>
+                    </blockquote>
+                </div>
+                <a href="#packages" class="cta-button">Choose Your Plan</a>
+            </div>
+        </section>
+
+        <section class="quotes-banner">
+            <div class="container">
+                <div class="quotes-slider">
+                    <div class="quote-item active">
+                        <p>"The cave you fear to enter holds the treasure you seek."</p>
+                        <span>- Joe Rogan</span>
+                    </div>
+                    <div class="quote-item">
+                        <p>"Suffering is the true test of life."</p>
+                        <span>- David Goggins</span>
+                    </div>
+                    <div class="quote-item">
+                        <p>"Be the hero of your own movie."</p>
+                        <span>- Joe Rogan</span>
+                    </div>
+                    <div class="quote-item">
+                        <p>"You have to build calluses on your brain just like how you build calluses on your hands."</p>
+                        <span>- David Goggins</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="packages" class="packages">
+            <div class="container">
+                <h2>Choose Your Fitness Journey</h2>
+                <div class="package-grid">
+                    <div class="package-card">
+                        <h3>Starter</h3>
+                        <div class="price">$30</div>
+                        <div class="duration">One-time payment</div>
+                        <ul>
+                            <li>2-week workout plan</li>
+                            <li>Basic nutrition guide</li>
+                            <li>Student-friendly meal prep</li>
+                            <li>Equipment-free workouts</li>
+                        </ul>
+                        <button class="cta-button" onclick="selectPackage('starter', 30)">Get Started</button>
+                    </div>
+                    
+                    <div class="package-card popular">
+                        <h3>Monthly</h3>
+                        <div class="price">$55</div>
+                        <div class="duration">Per month</div>
+                        <ul>
+                            <li>Weekly check-ins</li>
+                            <li>Custom meal plans</li>
+                            <li>New workouts weekly</li>
+                            <li>Progress tracking</li>
+                            <li>Text/video support</li>
+                        </ul>
+                        <button class="cta-button" onclick="selectPackage('monthly', 55)">Most Popular</button>
+                    </div>
+                    
+                    <div class="package-card">
+                        <h3>Extended Growth</h3>
+                        <div class="price">$42</div>
+                        <div class="duration">Per month (6 months)</div>
+                        <ul>
+                            <li>Everything in Monthly</li>
+                            <li>Group chat access</li>
+                            <li>Monthly challenges</li>
+                            <li>Exam week flexibility</li>
+                            <li>Seasonal meal planning</li>
+                        </ul>
+                        <button class="cta-button" onclick="selectPackage('extended', 42)">Save 24%</button>
+                    </div>
+                    
+                    <div class="package-card">
+                        <h3>Year-Long</h3>
+                        <div class="price">$35</div>
+                        <div class="duration">Per month (12 months)</div>
+                        <ul>
+                            <li>Everything in Extended</li>
+                            <li>Quarterly reviews</li>
+                            <li>College prep planning</li>
+                            <li>Priority support</li>
+                            <li>Biggest savings</li>
+                        </ul>
+                        <button class="cta-button" onclick="selectPackage('yearlong', 35)">Best Value</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact-form">
+            <div class="container">
+                <h2>Ready to LOCKDOWN Your Goals?</h2>
+                <div class="quote-section">
+                    <blockquote class="motivational-quote dark">
+                        "Most people fail in life not because they aim too high and miss, but because they aim too low and hit."
+                        <cite>- David Goggins</cite>
+                    </blockquote>
+                </div>
+                <div class="form-container">
+                    <form id="signupForm">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="age">Age</label>
+                            <input type="number" id="age" name="age" min="12" max="18" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="package">Selected Package</label>
+                            <select id="package" name="package" required>
+                                <option value="">Choose a package</option>
+                                <option value="starter">Starter - $30</option>
+                                <option value="monthly">Monthly - $55/month</option>
+                                <option value="extended">Extended Growth - $42/month</option>
+                                <option value="yearlong">Year-Long - $35/month</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="goals">Your Fitness Goals</label>
+                            <textarea id="goals" name="goals" rows="4" placeholder="Tell me about your fitness goals and any challenges you're facing..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="cta-button" style="width: 100%;">LOCK IN!</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="admin-panel" class="admin-panel">
+        <div class="container">
+            <div class="admin-header">
+                <h2>Client Dashboard</h2>
+                <button class="cta-button" onclick="toggleAdmin()">Back to Site</button>
+            </div>
+            
+            <div id="client-list">
+                <!-- Clients will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
