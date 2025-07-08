@@ -43,7 +43,31 @@ document.getElementById('signupForm').addEventListener('submit', function(e) {
         signupDate: new Date().toLocaleDateString()
     };
     
-    clients.push(client);
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    const client = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        phone: formData.get('phone'),
+        age: formData.get('age'),
+        package: formData.get('package'),
+        goals: formData.get('goals'),
+        status: 'pending',
+        signupDate: new Date().toLocaleDateString()
+    };
+
+    // THIS is what saves to Firebase:
+    db.ref('clients').push(client)
+      .then(() => {
+          alert('LOCKED IN! You\'ll receive a welcome email within 24 hours with your first workout plan.');
+          this.reset();
+          updateClientList(); // refreshes your admin panel
+      })
+      .catch(error => {
+          alert('Error saving data: ' + error.message);
+      });
+});
     
     // Show success message
     alert('LOCKED IN! You\'ll receive a welcome email within 24 hours with your first workout plan.');
