@@ -52,13 +52,19 @@ document.getElementById('signupForm').addEventListener('submit', function(e) {
 function toggleAdmin() {
     const adminPanel = document.getElementById('admin-panel');
     const mainContent = document.getElementById('main-content');
+
     if (adminPanel.classList.contains('active')) {
         adminPanel.classList.remove('active');
         mainContent.style.display = 'block';
     } else {
-        adminPanel.classList.add('active');
-        mainContent.style.display = 'none';
-        updateClientList();
+        const password = prompt('Enter admin password:');
+        if (password === '201213') {
+            adminPanel.classList.add('active');
+            mainContent.style.display = 'none';
+            updateClientList();
+        } else {
+            alert('Incorrect password. Access denied.');
+        }
     }
 }
 
