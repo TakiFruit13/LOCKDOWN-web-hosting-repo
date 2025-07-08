@@ -178,3 +178,17 @@ function removeClient(clientId) {
             .then(updateClientList);
     }
 }
+function updateClientList() {
+    const clientList = document.getElementById('client-list');
+    db.ref('clients').once('value', snapshot => {
+        console.log("Fetched snapshot:", snapshot.val()); // ADD THIS LINE
+        const clients = [];
+        snapshot.forEach(child => {
+            const client = child.val();
+            client.id = child.key;
+            clients.push(client);
+        });
+        console.log("Parsed clients array:", clients); // ADD THIS LINE
+        // ...rest of your display code...
+    });
+}
