@@ -167,3 +167,14 @@ clients = [];
 document.addEventListener('DOMContentLoaded', function() {
     updateClientList();
 });
+function updateClientStatus(clientId, status) {
+    db.ref('clients/' + clientId).update({ status })
+        .then(updateClientList);
+}
+
+function removeClient(clientId) {
+    if (confirm('Are you sure you want to remove this client?')) {
+        db.ref('clients/' + clientId).remove()
+            .then(updateClientList);
+    }
+}
