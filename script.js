@@ -1,8 +1,3 @@
-// In-memory storage for clients
-let clients = [];
-let selectedPackage = null;
-let selectedPrice = null;
-
 // Quote rotation
 let currentQuote = 0;
 const quotes = document.querySelectorAll('.quote-item');
@@ -15,13 +10,10 @@ function rotateQuotes() {
     }
 }
 
-// Start quote rotation
 setInterval(rotateQuotes, 4000);
 
 // Package selection
 function selectPackage(packageType, price) {
-    selectedPackage = packageType;
-    selectedPrice = price;
     document.getElementById('package').value = packageType;
     document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
 }
@@ -42,7 +34,7 @@ document.getElementById('signupForm').addEventListener('submit', function(e) {
         signupDate: new Date().toLocaleDateString()
     };
 
-    fetch('https://script.google.com/macros/s/AKfycbyWWz_7pG4AmXltl2Ne5wbU5PG4XzlzXhYJla-ajvvX/dev', {  // <--- replace with your actual URL
+    fetch('https://script.google.com/macros/s/AKfycbyWWz_7pG4AmXltl2Ne5wbU5PG4XzlzXhYJla-ajvvX/dev', {
         method: 'POST',
         body: JSON.stringify(client),
         headers: { 'Content-Type': 'application/json' }
@@ -51,7 +43,7 @@ document.getElementById('signupForm').addEventListener('submit', function(e) {
     .then(data => {
         alert("LOCKED IN! You'll receive a welcome email within 24 hours with your first workout plan.");
         this.reset();
-        updateClientList(); // fetches new data from Google Sheets
+        updateClientList();
     })
     .catch(err => {
         alert("There was an error submitting your form!");
@@ -63,14 +55,23 @@ document.getElementById('signupForm').addEventListener('submit', function(e) {
 function toggleAdmin() {
     const adminPanel = document.getElementById('admin-panel');
     const mainContent = document.getElementById('main-content');
-    
-    if (adminPanel.classList.contains('active')) {
-        adminPanel.classList.remove('active');
-        mainContent.style.display = 'block';
-    } else {
+
+    if (!adminPanel.classList.contains('active')) {
+        const password = prompt("Enter admin password:");
+
+        if (password !== "201213") {
+            alert("Access denied. Incorrect password.");
+            return;
+        }
+
+        // If password is correct, show the admin panel
         adminPanel.classList.add('active');
         mainContent.style.display = 'none';
         updateClientList();
+    } else {
+        // Hide the admin panel and return to site
+        adminPanel.classList.remove('active');
+        mainContent.style.display = 'block';
     }
 }
 
@@ -102,7 +103,6 @@ function updateClientList() {
                     <p><strong>Package:</strong> ${getPackageName(client.package)}</p>
                     <p><strong>Goals:</strong> ${client.goals}</p>
                     <p><strong>Signed Up:</strong> ${client.signupDate}</p>
-                    <!-- Add status update/remove buttons here if you wish, but you'll need to update Google Sheets via Apps Script for changes -->
                 </div>
             `).join('');
         })
@@ -123,23 +123,6 @@ function getPackageName(packageType) {
     return packages[packageType] || packageType;
 }
 
-// Update client status
-function updateClientStatus(clientId, status) {
-    const client = clients.find(c => c.id === clientId);
-    if (client) {
-        client.status = status;
-        updateClientList();
-    }
-}
-
-// Remove client
-function removeClient(clientId) {
-    if (confirm('Are you sure you want to remove this client?')) {
-        clients = clients.filter(c => c.id !== clientId);
-        updateClientList();
-    }
-}
-
 // Smooth scrolling for navigation
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -151,33 +134,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Initialize empty clients array
-clients = [];
-
 // Auto-update client list on page load
 document.addEventListener('DOMContentLoaded', function() {
     updateClientList();
 });
-
-function toggleAdmin() {
-    const adminPanel = document.getElementById('admin-panel');
-    const mainContent = document.getElementById('main-content');
-
-    if (!adminPanel.classList.contains('active')) {
-        const password = prompt("Enter admin password:");
-
-        if (password !== "201213") {
-            alert("Access denied. Incorrect password.");
-            return;
-        }
-
-        // If password is correct, show the admin panel
-        adminPanel.classList.add('active');
-        mainContent.style.display = 'none';
-        updateClientList();
-    } else {
-        // Hide the admin panel and return to site
-        adminPanel.classList.remove('active');
-        mainContent.style.display = 'block';
-    }
-}
