@@ -64,7 +64,6 @@
     box-shadow: 0 0 5px rgba(255, 107, 107, 0.3);
 }
 
-/* Everything below this point continues your original styles… */
 * {
     margin: 0;
     padding: 0;
@@ -79,5 +78,216 @@ body {
     min-height: 100vh;
 }
 
-/* ⬇️ I've kept all the rest of your styles intact: container, nav, hero, packages, quote sliders, admin panel, media queries, etc. */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
 
+header {
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    padding: 1rem 0;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+    border-bottom: 1px solid #333;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ff6b6b;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #e0e0e0;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #ff6b6b;
+    text-shadow: 0 0 5px rgba(255, 107, 107, 0.5);
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background: #e0e0e0;
+    margin: 3px 0;
+    transition: 0.3s;
+}
+
+.quotes-banner {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 2rem 0;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+}
+
+.quotes-slider {
+    text-align: center;
+}
+
+.quote-item {
+    display: none;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.quote-item.active {
+    display: block;
+}
+
+.quote-item p {
+    font-size: 1.3rem;
+    font-style: italic;
+    color: #ff6b6b;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.quote-item span {
+    color: #bbb;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.quote-section {
+    margin: 2rem 0;
+}
+
+.motivational-quote {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 1.5rem;
+    border-left: 4px solid #ff6b6b;
+    border-radius: 8px;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: #e0e0e0;
+    margin: 2rem auto;
+    max-width: 600px;
+}
+
+.motivational-quote.dark {
+    background: rgba(0, 0, 0, 0.8);
+    border-left: 4px solid #ff6b6b;
+}
+
+.motivational-quote cite {
+    display: block;
+    text-align: right;
+    margin-top: 1rem;
+    font-weight: bold;
+    color: #ff6b6b;
+    font-style: normal;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.hero {
+    text-align: center;
+    padding: 4rem 0;
+    color: white;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-button {
+    background: #ff6b6b;
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.cta-button:hover {
+    background: #ff5252;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+}
+
+.packages {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    padding: 4rem 0;
+    border-top: 1px solid #333;
+}
+
+.packages h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: #ff6b6b;
+    font-weight: 900;
+    text-shadow: 0 0 10px rgba(255, 107, 107, 0.3);
+}
+
+.package-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.package-card {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    padding: 2rem;
+    border-radius: 20px;
+    text-align: center;
+    color: #e0e0e0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid #444;
+}
+
+.package-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(255, 107, 107, 0.2);
+}
+
+.package-card.popular {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100
