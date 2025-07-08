@@ -1,4 +1,4 @@
-// In-memory storage for clients is no longer needed!
+// No need for a clients array! All data is in Firebase.
 let selectedPackage = null;
 let selectedPrice = null;
 
@@ -13,8 +13,6 @@ function rotateQuotes() {
         quotes[currentQuote].classList.add('active');
     }
 }
-
-// Start quote rotation
 setInterval(rotateQuotes, 4000);
 
 // Package selection
@@ -39,8 +37,6 @@ document.getElementById('signupForm').addEventListener('submit', function(e) {
         status: 'pending',
         signupDate: new Date().toLocaleDateString()
     };
-
-    // Save to Firebase
     db.ref('clients').push(client)
       .then(() => {
           alert('LOCKED IN! You\'ll receive a welcome email within 24 hours with your first workout plan.');
@@ -56,7 +52,6 @@ document.getElementById('signupForm').addEventListener('submit', function(e) {
 function toggleAdmin() {
     const adminPanel = document.getElementById('admin-panel');
     const mainContent = document.getElementById('main-content');
-    
     if (adminPanel.classList.contains('active')) {
         adminPanel.classList.remove('active');
         mainContent.style.display = 'block';
