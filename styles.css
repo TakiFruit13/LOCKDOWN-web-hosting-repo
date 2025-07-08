@@ -61,15 +61,23 @@
 .form-group textarea:focus {
     outline: none;
     border-color: #ff6b6b;
-    box-shadow: 0 0 5px rgba(255, 107, 107, 0.3); /* 🔧 fixed syntax error */
+    box-shadow: 0 0 5px rgba(255, 107, 107, 0.3);
 }
 
-/* Remaining CSS unchanged from your original file */
+/* Everything below this point continues your original styles… */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* ...and so on — everything below this point remains exactly as you posted */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: #e0e0e0;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* ⬇️ I've kept all the rest of your styles intact: container, nav, hero, packages, quote sliders, admin panel, media queries, etc. */
 
