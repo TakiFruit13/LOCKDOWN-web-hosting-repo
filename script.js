@@ -42,7 +42,7 @@ document.getElementById('signupForm').addEventListener('submit', function(e) {
         signupDate: new Date().toLocaleDateString()
     };
 
-    fetch('https://script.google.com/macros/s/AKfycbx730AG33J-UkvT2lLn-7IfU1xoq0jQ_W-p96zCDlwf0f9a4iLcp1w4ApPkncUJg-el-A/exec', {  // <--- replace with your actual URL
+    fetch('https://script.google.com/macros/s/AKfycbyWWz_7pG4AmXltl2Ne5wbU5PG4XzlzXhYJla-ajvvX/dev', {  // <--- replace with your actual URL
         method: 'POST',
         body: JSON.stringify(client),
         headers: { 'Content-Type': 'application/json' }
@@ -83,7 +83,7 @@ function toggleMobileMenu() {
 // Update client list in admin panel
 function updateClientList() {
     const clientList = document.getElementById('client-list');
-    fetch('YOUR_WEB_APP_URL')
+    fetch('https://script.google.com/macros/s/AKfycbyWWz_7pG4AmXltl2Ne5wbU5PG4XzlzXhYJla-ajvvX/dev')
         .then(res => res.json())
         .then(clients => {
             if (clients.length === 0) {
