@@ -1,5 +1,4 @@
-// In-memory storage for clients
-let clients = [];
+// In-memory storage for clients is no longer needed!
 let selectedPackage = null;
 let selectedPrice = null;
 
@@ -29,22 +28,6 @@ function selectPackage(packageType, price) {
 // Form submission
 document.getElementById('signupForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    
-    const formData = new FormData(this);
-    const client = {
-        id: Date.now(),
-        name: formData.get('name'),
-        email: formData.get('email'),
-        phone: formData.get('phone'),
-        age: formData.get('age'),
-        package: formData.get('package'),
-        goals: formData.get('goals'),
-        status: 'pending',
-        signupDate: new Date().toLocaleDateString()
-    };
-    
-    document.getElementById('signupForm').addEventListener('submit', function(e) {
-    e.preventDefault();
     const formData = new FormData(this);
     const client = {
         name: formData.get('name'),
@@ -57,26 +40,16 @@ document.getElementById('signupForm').addEventListener('submit', function(e) {
         signupDate: new Date().toLocaleDateString()
     };
 
-    // THIS is what saves to Firebase:
+    // Save to Firebase
     db.ref('clients').push(client)
       .then(() => {
           alert('LOCKED IN! You\'ll receive a welcome email within 24 hours with your first workout plan.');
           this.reset();
-          updateClientList(); // refreshes your admin panel
+          updateClientList(); // Refresh admin panel
       })
       .catch(error => {
           alert('Error saving data: ' + error.message);
       });
-});
-    
-    // Show success message
-    alert('LOCKED IN! You\'ll receive a welcome email within 24 hours with your first workout plan.');
-    
-    // Reset form
-    this.reset();
-    
-    // Update admin panel
-    updateClientList();
 });
 
 // Admin panel toggle
@@ -136,20 +109,18 @@ function updateClientList() {
         `).join('');
     });
 }
-// Update client status
+
+// Update client status in Firebase
 function updateClientStatus(clientId, status) {
-    const client = clients.find(c => c.id === clientId);
-    if (client) {
-        client.status = status;
-        updateClientList();
-    }
+    db.ref('clients/' + clientId).update({ status })
+        .then(updateClientList);
 }
 
-// Remove client
+// Remove client from Firebase
 function removeClient(clientId) {
     if (confirm('Are you sure you want to remove this client?')) {
-        clients = clients.filter(c => c.id !== clientId);
-        updateClientList();
+        db.ref('clients/' + clientId).remove()
+            .then(updateClientList);
     }
 }
 
@@ -164,38 +135,12 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Initialize empty clients array
-clients = [];
-
 // Auto-update client list on page load
 document.addEventListener('DOMContentLoaded', function() {
     updateClientList();
 });
-function updateClientStatus(clientId, status) {
-    db.ref('clients/' + clientId).update({ status })
-        .then(updateClientList);
-}
 
-function removeClient(clientId) {
-    if (confirm('Are you sure you want to remove this client?')) {
-        db.ref('clients/' + clientId).remove()
-            .then(updateClientList);
-    }
-}
-function updateClientList() {
-    const clientList = document.getElementById('client-list');
-    db.ref('clients').once('value', snapshot => {
-        console.log("Fetched snapshot:", snapshot.val()); // ADD THIS LINE
-        const clients = [];
-        snapshot.forEach(child => {
-            const client = child.val();
-            client.id = child.key;
-            clients.push(client);
-        });
-        console.log("Parsed clients array:", clients); // ADD THIS LINE
-        // ...rest of your display code...
-    });
-}
+// Helper function to get package name
 function getPackageName(packageType) {
     const packages = {
         'starter': 'Starter - $30',
