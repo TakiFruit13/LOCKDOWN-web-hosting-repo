@@ -128,6 +128,10 @@ function updateClientList() {
                 <p><strong>Package:</strong> ${getPackageName(client.package)}</p>
                 <p><strong>Goals:</strong> ${client.goals}</p>
                 <p><strong>Signed Up:</strong> ${client.signupDate}</p>
+                <div style="margin-top: 1rem;">
+                    <button class="cta-button" onclick="updateClientStatus('${client.id}', 'active')" style="margin-right: 1rem;">Activate</button>
+                    <button class="cta-button" onclick="removeClient('${client.id}')" style="background: #e74c3c;">Remove</button>
+                </div>
             </div>
         `).join('');
     });
