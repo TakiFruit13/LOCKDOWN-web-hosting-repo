@@ -151,3 +151,26 @@ clients = [];
 document.addEventListener('DOMContentLoaded', function() {
     updateClientList();
 });
+
+function toggleAdmin() {
+    const adminPanel = document.getElementById('admin-panel');
+    const mainContent = document.getElementById('main-content');
+
+    if (!adminPanel.classList.contains('active')) {
+        const password = prompt("Enter admin password:");
+
+        if (password !== "201213") {
+            alert("Access denied. Incorrect password.");
+            return;
+        }
+
+        // If password is correct, show the admin panel
+        adminPanel.classList.add('active');
+        mainContent.style.display = 'none';
+        updateClientList();
+    } else {
+        // Hide the admin panel and return to site
+        adminPanel.classList.remove('active');
+        mainContent.style.display = 'block';
+    }
+}
