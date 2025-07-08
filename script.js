@@ -29,10 +29,9 @@ function selectPackage(packageType, price) {
 // Form submission
 document.getElementById('signupForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    
+
     const formData = new FormData(this);
     const client = {
-        id: Date.now(),
         name: formData.get('name'),
         email: formData.get('email'),
         phone: formData.get('phone'),
@@ -42,17 +41,22 @@ document.getElementById('signupForm').addEventListener('submit', function(e) {
         status: 'pending',
         signupDate: new Date().toLocaleDateString()
     };
-    
-    clients.push(client);
-    
-    // Show success message
-    alert('LOCKED IN! You\'ll receive a welcome email within 24 hours with your first workout plan.');
-    
-    // Reset form
-    this.reset();
-    
-    // Update admin panel
-    updateClientList();
+
+    fetch('https://script.google.com/macros/s/AKfycbx730AG33J-UkvT2lLn-7IfU1xoq0jQ_W-p96zCDlwf0f9a4iLcp1w4ApPkncUJg-el-A/exec', {  // <--- replace with your actual URL
+        method: 'POST',
+        body: JSON.stringify(client),
+        headers: { 'Content-Type': 'application/json' }
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert("LOCKED IN! You'll receive a welcome email within 24 hours with your first workout plan.");
+        this.reset();
+        updateClientList(); // fetches new data from Google Sheets
+    })
+    .catch(err => {
+        alert("There was an error submitting your form!");
+        console.error(err);
+    });
 });
 
 // Admin panel toggle
@@ -79,30 +83,33 @@ function toggleMobileMenu() {
 // Update client list in admin panel
 function updateClientList() {
     const clientList = document.getElementById('client-list');
-    
-    if (clients.length === 0) {
-        clientList.innerHTML = '<p style="text-align: center; color: #bdc3c7;">No clients yet. Start promoting your LOCKDOWN services!</p>';
-        return;
-    }
-    
-    clientList.innerHTML = clients.map(client => `
-        <div class="client-card">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                <h4>${client.name}</h4>
-                <span class="status-badge status-${client.status}">${client.status}</span>
-            </div>
-            <p><strong>Email:</strong> ${client.email}</p>
-            <p><strong>Phone:</strong> ${client.phone}</p>
-            <p><strong>Age:</strong> ${client.age}</p>
-            <p><strong>Package:</strong> ${getPackageName(client.package)}</p>
-            <p><strong>Goals:</strong> ${client.goals}</p>
-            <p><strong>Signed Up:</strong> ${client.signupDate}</p>
-            <div style="margin-top: 1rem;">
-                <button class="cta-button" onclick="updateClientStatus(${client.id}, 'active')" style="margin-right: 1rem;">Activate</button>
-                <button class="cta-button" onclick="removeClient(${client.id})" style="background: #e74c3c;">Remove</button>
-            </div>
-        </div>
-    `).join('');
+    fetch('YOUR_WEB_APP_URL')
+        .then(res => res.json())
+        .then(clients => {
+            if (clients.length === 0) {
+                clientList.innerHTML = '<p style="text-align: center; color: #bdc3c7;">No clients yet. Start promoting your LOCKDOWN services!</p>';
+                return;
+            }
+            clientList.innerHTML = clients.map(client => `
+                <div class="client-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h4>${client.name}</h4>
+                        <span class="status-badge status-${client.status}">${client.status}</span>
+                    </div>
+                    <p><strong>Email:</strong> ${client.email}</p>
+                    <p><strong>Phone:</strong> ${client.phone}</p>
+                    <p><strong>Age:</strong> ${client.age}</p>
+                    <p><strong>Package:</strong> ${getPackageName(client.package)}</p>
+                    <p><strong>Goals:</strong> ${client.goals}</p>
+                    <p><strong>Signed Up:</strong> ${client.signupDate}</p>
+                    <!-- Add status update/remove buttons here if you wish, but you'll need to update Google Sheets via Apps Script for changes -->
+                </div>
+            `).join('');
+        })
+        .catch(err => {
+            clientList.innerHTML = '<p style="color:red;">Failed to load client list.</p>';
+            console.error(err);
+        });
 }
 
 // Helper function to get package name
