@@ -103,43 +103,35 @@ function toggleMobileMenu() {
 // Update client list in admin panel
 function updateClientList() {
     const clientList = document.getElementById('client-list');
-    
-    if (clients.length === 0) {
-        clientList.innerHTML = '<p style="text-align: center; color: #bdc3c7;">No clients yet. Start promoting your LOCKDOWN services!</p>';
-        return;
-    }
-    
-    clientList.innerHTML = clients.map(client => `
-        <div class="client-card">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                <h4>${client.name}</h4>
-                <span class="status-badge status-${client.status}">${client.status}</span>
-            </div>
-            <p><strong>Email:</strong> ${client.email}</p>
-            <p><strong>Phone:</strong> ${client.phone}</p>
-            <p><strong>Age:</strong> ${client.age}</p>
-            <p><strong>Package:</strong> ${getPackageName(client.package)}</p>
-            <p><strong>Goals:</strong> ${client.goals}</p>
-            <p><strong>Signed Up:</strong> ${client.signupDate}</p>
-            <div style="margin-top: 1rem;">
-                <button class="cta-button" onclick="updateClientStatus(${client.id}, 'active')" style="margin-right: 1rem;">Activate</button>
-                <button class="cta-button" onclick="removeClient(${client.id})" style="background: #e74c3c;">Remove</button>
-            </div>
-        </div>
-    `).join('');
-}
+    db.ref('clients').once('value', snapshot => {
+        const clients = [];
+        snapshot.forEach(child => {
+            const client = child.val();
+            client.id = child.key;
+            clients.push(client);
+        });
 
-// Helper function to get package name
-function getPackageName(packageType) {
-    const packages = {
-        'starter': 'Starter - $30',
-        'monthly': 'Monthly - $55/month',
-        'extended': 'Extended Growth - $42/month',
-        'yearlong': 'Year-Long - $35/month'
-    };
-    return packages[packageType] || packageType;
-}
+        if (clients.length === 0) {
+            clientList.innerHTML = '<p style="text-align: center; color: #bdc3c7;">No clients yet. Start promoting your LOCKDOWN services!</p>';
+            return;
+        }
 
+        clientList.innerHTML = clients.map(client => `
+            <div class="client-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h4>${client.name}</h4>
+                    <span class="status-badge status-${client.status}">${client.status}</span>
+                </div>
+                <p><strong>Email:</strong> ${client.email}</p>
+                <p><strong>Phone:</strong> ${client.phone}</p>
+                <p><strong>Age:</strong> ${client.age}</p>
+                <p><strong>Package:</strong> ${getPackageName(client.package)}</p>
+                <p><strong>Goals:</strong> ${client.goals}</p>
+                <p><strong>Signed Up:</strong> ${client.signupDate}</p>
+            </div>
+        `).join('');
+    });
+}
 // Update client status
 function updateClientStatus(clientId, status) {
     const client = clients.find(c => c.id === clientId);
