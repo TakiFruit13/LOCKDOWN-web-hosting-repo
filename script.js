@@ -102,6 +102,9 @@ function updateClientList() {
                 <p><strong>Email:</strong> ${client.email}</p>
                 <p><strong>Phone:</strong> ${client.phone}</p>
                 <p><strong>Age:</strong> ${client.age}</p>
+                <p><strong>Weight:</strong> ${client.weight} lbs</p>
+                <p><strong>Height:</strong> ${client.height} cm</p>
+                <p><strong>Activity Level:</strong> ${client.activityLevel}</p>
                 <p><strong>Package:</strong> ${getPackageName(client.package)}</p>
                 <p><strong>Goals:</strong> ${client.goals}</p>
                 <p><strong>Signed Up:</strong> ${client.signupDate}</p>
